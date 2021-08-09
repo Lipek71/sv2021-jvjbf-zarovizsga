@@ -1,4 +1,4 @@
-package finalexam.players;
+package finalexam;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(statements = {"delete from players"})
 public class PlayerControllerRestIT {
-/*
+
     @Autowired
     TestRestTemplate template;
 
@@ -87,9 +87,9 @@ public class PlayerControllerRestIT {
     void testCreatePlayerWithInvalidName(){
         Problem result =
                 template.postForObject("/api/players",
-                        new CreateTeamCommand(""),
+                        new CreatePlayerCommand("",null ,null ),
                         Problem.class);
 
         assertEquals(Status.BAD_REQUEST,result.getStatus());
-    }*/
+    }
 }

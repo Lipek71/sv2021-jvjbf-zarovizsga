@@ -1,4 +1,4 @@
-package finalexam.players;
+package finalexam;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -6,9 +6,9 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.test.context.jdbc.Sql;
-//import org.training360.finalexam.teams.CreateTeamCommand;
-//import org.training360.finalexam.teams.TeamDTO;
-//import org.training360.finalexam.teams.UpdateWithExistingPlayerCommand;
+import finalexam.CreateTeamCommand;
+import finalexam.TeamDTO;
+import finalexam.UpdateWithExistingPlayerCommand;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
 
@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(statements = {"delete from players","delete from teams"})
 public class TeamControllerRestIT {
-/*
+
 
     @Autowired
     TestRestTemplate template;
@@ -80,7 +80,7 @@ public class TeamControllerRestIT {
 
     }
 
-    @Test
+   @Test
     void testAddExistingPlayerToExistingTeam(){
         TeamDTO team =
                 template.postForObject("/api/teams",
@@ -207,5 +207,5 @@ public class TeamControllerRestIT {
 
         assertEquals(Status.BAD_REQUEST,result.getStatus());
     }
-*/
+
 }
