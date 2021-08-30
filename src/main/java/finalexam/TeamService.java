@@ -13,9 +13,9 @@ import java.util.stream.Collectors;
 @Service
 public class TeamService {
 
-    TeamRepository teamRepository;
+    private TeamRepository teamRepository;
 
-    PlayerRepository playerRepository;
+    private PlayerRepository playerRepository;
 
     private ModelMapper modelMapper;
 
@@ -37,7 +37,7 @@ public class TeamService {
 
     @Transactional
     public TeamDTO addNewPlayerToTeam(long id, CreatePlayerCommand command) {
-        Team team = teamRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Team not found: " + id));
+        Team team = teamRepository.findById(id).orElseThrow(() -> new NotFoundExeption(id));
         Player player = new Player(command.getName(), command.getBirthDate(), command.getPosition());
         team.addPlayer(player);
         return modelMapper.map(team, TeamDTO.class);
@@ -45,10 +45,10 @@ public class TeamService {
 
     @Transactional
     public TeamDTO addExistingPlayerToTeam(long id, UpdateWithExistingPlayerCommand command) {
-        Team team = teamRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Team not found: " + id));
-        Player player = playerRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Team not found: " + id));
+        Team team = teamRepository.findById(id).orElseThrow(() -> new NotFoundExeption(id));
+        Player player = playerRepository.findById(command.getId()).orElseThrow(() -> new NotFoundExeption(command.getId()));
 
-        int playersOfPosition = 0;
+        /*int playersOfPosition = 0;
         for(Player player1 : team.getPlayers()) {
             if (player1.getPosition().equals(player.getPosition())){
                 playersOfPosition++;
@@ -57,8 +57,18 @@ public class TeamService {
 
         if ((player.getTeam() == null) && (playersOfPosition < 1)) {
             player.setTeam(team);
+        }*/
+
+        if (player.hasNoTeam() && hasEmptyPosition(team, player)){
+            team.addPlayer(player);
         }
 
         return modelMapper.map(team, TeamDTO.class);
+    }
+
+    private boolean hasEmptyPosition(Team team, Player player){
+        return team.getPlayers().stream()
+                .filter(p->p.getPosition()==player.getPosition())
+                .collect(Collectors.toList()).size() < 2;
     }
 }

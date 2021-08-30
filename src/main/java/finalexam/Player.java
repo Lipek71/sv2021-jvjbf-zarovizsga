@@ -1,4 +1,5 @@
 package finalexam;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -35,5 +36,9 @@ public class Player {
         this.name = name;
         this.birthDate = birthDate;
         this.position = position;
+    }
+
+    public boolean hasNoTeam() {
+        return team == null;
     }
 }

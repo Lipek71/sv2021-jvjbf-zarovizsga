@@ -35,7 +35,7 @@ public class PlayerService {
     public void deletePlayer(long id) {
         Player player = playerRepository.getById(id);
         if(player == null){
-            throw new IllegalArgumentException("Training class not found!" + id);
+            throw new NotFoundExeption(id);
         }
         playerRepository.deleteById(id);
     }
