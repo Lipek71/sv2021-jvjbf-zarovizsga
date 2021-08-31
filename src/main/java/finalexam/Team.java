@@ -27,16 +27,16 @@ public class Team {
 
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
-    //private List<Player> players;
-    private Set<Player> players = new HashSet<>();
+    private List<Player> players;
+    //private Set<Player> players = new HashSet<>();
     public Team(String name) {
         this.name = name;
     }
 
     public void addPlayer(Player player) {
-        /*if (players == null) {
+        if (players == null) {
             players = new ArrayList<>();
-        }*/
+        }
         players.add(player);
         player.setTeam(this);
     }

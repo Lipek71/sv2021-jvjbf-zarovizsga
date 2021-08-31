@@ -48,27 +48,27 @@ public class TeamService {
         Team team = teamRepository.findById(id).orElseThrow(() -> new NotFoundExeption(id));
         Player player = playerRepository.findById(command.getId()).orElseThrow(() -> new NotFoundExeption(command.getId()));
 
-        /*int playersOfPosition = 0;
+        int playersOfPosition = 0;
         for(Player player1 : team.getPlayers()) {
             if (player1.getPosition().equals(player.getPosition())){
                 playersOfPosition++;
             }
         }
 
-        if ((player.getTeam() == null) && (playersOfPosition < 1)) {
+        if ((player.getTeam() == null) && (playersOfPosition < 2)) {
             player.setTeam(team);
-        }*/
-
-        if (player.hasNoTeam() && hasEmptyPosition(team, player)){
-            team.addPlayer(player);
         }
+
+        /*if (player.hasNoTeam() && hasEmptyPosition(team, player)){
+            team.addPlayer(player);
+        }*/
 
         return modelMapper.map(team, TeamDTO.class);
     }
 
-    private boolean hasEmptyPosition(Team team, Player player){
+    /*private boolean hasEmptyPosition(Team team, Player player){
         return team.getPlayers().stream()
                 .filter(p->p.getPosition()==player.getPosition())
                 .collect(Collectors.toList()).size() < 2;
-    }
+    }*/
 }
